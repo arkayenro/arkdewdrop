@@ -5,8 +5,8 @@ Description: A library to provide a dropdown menu interface.
 
 License: LGPL v2.1 (this file specifically)
 
-$Revision: 1537 $
-$Date: 2016-07-17 01:03:52 +1000 (Sun, 17 Jul 2016) $
+$Revision: 1920 $
+$Date: 2018-04-08 14:35:09 +1000 (Sun, 08 Apr 2018) $
 ]]
 
 --[[
@@ -21,7 +21,7 @@ License: LGPL v2.1
 ]]
 
 local libname = "ArkDewdrop"
-local libversion = 30102
+local libversion = 30103
 local lib = LibStub:NewLibrary( libname, libversion )
 
 if not lib then
