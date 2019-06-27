@@ -1,9 +1,9 @@
-﻿## Interface: 70300
+﻿## Interface: 80200
 
 ## Title: ArkDewdrop
 ## Author: Arkayenro - Khaz'goroth
 ## Email: arkayenro at gmail dot com
-## Version: 30103
+## Version: 30105
 ## X-ReleaseType: 
 ## DefaultState: Disabled
 ## LoadOnDemand: 0

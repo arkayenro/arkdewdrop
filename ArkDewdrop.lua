@@ -5,8 +5,8 @@ Description: A library to provide a dropdown menu interface.
 
 License: LGPL v2.1 (this file specifically)
 
-$Revision: 1920 $
-$Date: 2018-04-08 14:35:09 +1000 (Sun, 08 Apr 2018) $
+$Revision: 2348 $
+$Date: 2019-06-27 14:09:07 +1000 (Thu, 27 Jun 2019) $
 ]]
 
 --[[
@@ -21,7 +21,7 @@ License: LGPL v2.1
 ]]
 
 local libname = "ArkDewdrop"
-local libversion = 30103
+local libversion = 30105
 local lib = LibStub:NewLibrary( libname, libversion )
 
 if not lib then
@@ -556,6 +556,11 @@ local function showGameTooltip(self)
 				GameTooltip:SetText(self.tooltipText, 1, 1, 1, 1)
 			end
 		end
+		GameTooltip:Show()
+	end
+	if self.tooltipLink then
+		GameTooltip_SetDefaultAnchor(GameTooltip, self)
+		GameTooltip:SetHyperlink(self.tooltipLink)
 		GameTooltip:Show()
 	end
 	if self.tooltipFunc then
@@ -3040,6 +3045,9 @@ end
 
 function lib:AddLine(...)
 	local info = tmp(...)
+	if info.hidden then
+		return
+	end
 	local level = info.level or currentLevel
 	info.level = nil
 	local button = AcquireButton(level)
@@ -3263,6 +3271,7 @@ function lib:AddLine(...)
 	button.tooltipTitle = info.tooltipTitle
 	button.tooltipText = info.tooltipText
 	button.tooltipFunc = info.tooltipFunc
+	button.tooltipLink = info.tooltipLink
 	local i = 1
 	while true do
 		local k = "tooltipArg" .. i
@@ -3273,7 +3282,7 @@ function lib:AddLine(...)
 		button[k] = x
 		i = i + 1
 	end
-	if not button.tooltipTitle and not button.tooltipText and not button.tooltipFunc and not info.isTitle then
+	if not button.tooltipTitle and not button.tooltipText and not button.tooltipFunc and not button.tooltipLink and not info.isTitle then
 		button.tooltipTitle = info.text
 	end
 	if type(button.func) == "string" then
