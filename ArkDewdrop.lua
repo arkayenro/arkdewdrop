@@ -5,8 +5,8 @@ Description: A library to provide a dropdown menu interface.
 
 License: LGPL v2.1 (this file specifically)
 
-$Revision: 2348 $
-$Date: 2019-06-27 14:09:07 +1000 (Thu, 27 Jun 2019) $
+$Revision: 2619 $
+$Date: 2020-08-11 22:07:25 +1000 (Tue, 11 Aug 2020) $
 ]]
 
 --[[
@@ -21,7 +21,7 @@ License: LGPL v2.1
 ]]
 
 local libname = "ArkDewdrop"
-local libversion = 30105
+local libversion = 30108
 local lib = LibStub:NewLibrary( libname, libversion )
 
 if not lib then
@@ -316,7 +316,7 @@ end
 local function StartCounting(level)
 	for i = level, 1, -1 do
 		if levels[i] then
-			levels[i].count = 3
+			levels[i].count = 5
 		end
 	end
 end
@@ -345,14 +345,17 @@ local function OnUpdate(self, elapsed)
 end
 
 local function CheckDualMonitor(frame)
+	if true then return end
 	local ratio = GetScreenWidth() / GetScreenHeight()
 	if ratio >= 2.4 and frame:GetRight() > GetScreenWidth() / 2 and frame:GetLeft() < GetScreenWidth() / 2 then
+		ArkInventory.Output( "check dual monitor" )
 		local offsetx
 		if GetCursorPosition() / GetScreenHeight() * 768 < GetScreenWidth() / 2 then
 			offsetx = GetScreenWidth() / 2 - frame:GetRight()
 		else
 			offsetx = GetScreenWidth() / 2 - frame:GetLeft()
 		end
+		ArkInventory.Output( "dual monitor offset" )
 		local point, parent, relativePoint, x, y = frame:GetPoint(1)
 		frame:SetPoint(point, parent, relativePoint, (x or 0) + offsetx, y or 0)
 	end
@@ -473,6 +476,7 @@ local function ReleaseButton(level, index)
 		return
 	end
 	local button = level.buttons[index]
+	button:ClearAllPoints( )
 	button:Hide()
 	if button.highlight then
 		button.highlight:Hide()
@@ -868,7 +872,8 @@ local function AcquireLevel(level)
 			end
 			frame:EnableMouse(true)
 			frame:EnableMouseWheel(true)
-			local backdrop = CreateFrame("Frame", nil, frame)
+			
+			local backdrop = CreateFrame("Frame", nil, frame, BackdropTemplateMixin and "BackdropTemplate")
 			backdrop:SetAllPoints(frame)
 			backdrop:SetBackdrop(tmp(
 				'bgFile', [[Interface\Tooltips\UI-Tooltip-Background]],
@@ -1906,7 +1911,7 @@ end
 function OpenSlider(parent)
 	if not sliderFrame then
 		
-		sliderFrame = CreateFrame("Frame")
+		sliderFrame = CreateFrame("Frame", nil, nil, BackdropTemplateMixin and "BackdropTemplate")
 		sliderFrame:SetWidth(100)
 		sliderFrame:SetHeight(170)
 		sliderFrame:SetScale(UIParent:GetScale())
@@ -1934,7 +1939,7 @@ function OpenSlider(parent)
 		sliderFrame:Hide()
 		sliderFrame:SetPoint("CENTER", UIParent, "CENTER")
 		
-		local slider = CreateFrame("Slider", nil, sliderFrame)
+		local slider = CreateFrame("Slider", nil, sliderFrame, BackdropTemplateMixin and "BackdropTemplate")
 		sliderFrame.slider = slider
 		slider:SetOrientation("VERTICAL")
 		slider:SetMinMaxValues(0, 1)
@@ -2330,7 +2335,7 @@ end
 
 function OpenEditBox(parent)
 	if not editBoxFrame then
-		editBoxFrame = CreateFrame("Frame")
+		editBoxFrame = CreateFrame("Frame", nil, nil, BackdropTemplateMixin and "BackdropTemplate")
 		editBoxFrame:SetWidth(200)
 		editBoxFrame:SetHeight(40)
 		editBoxFrame:SetScale(UIParent:GetScale())
@@ -3439,8 +3444,8 @@ local function activate()
 	hooksecurefunc( "CloseDropDownMenus",
 		function( )
 			if levels[1] and levels[1]:IsVisible( ) then
-				local stack = debugstack()
-				if not stack:find("`TargetFrame_OnHide'") then
+				local stack = debugstack( )
+				if not stack:find( "HandleGlobalMouseEvent" ) then
 					lib:Close( )
 				end
 			end
