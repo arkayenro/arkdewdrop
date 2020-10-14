@@ -1,3 +1,6 @@
+*3.01.09 (03-SEP-2020)*
+ * fixed - level 1 frames should no longer go off screen
+
 *3.01.08 (08-AUG-2020)*
  * updated - shadowlands backdroptemplate
 
