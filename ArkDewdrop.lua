@@ -5,8 +5,8 @@ Description: A library to provide a dropdown menu interface.
 
 License: LGPL v2.1 (this file specifically)
 
-$Revision: 2619 $
-$Date: 2020-08-11 22:07:25 +1000 (Tue, 11 Aug 2020) $
+$Revision: 2648 $
+$Date: 2020-09-03 08:45:42 +1000 (Thu, 03 Sep 2020) $
 ]]
 
 --[[
@@ -21,7 +21,7 @@ License: LGPL v2.1
 ]]
 
 local libname = "ArkDewdrop"
-local libversion = 30108
+local libversion = 30109
 local lib = LibStub:NewLibrary( libname, libversion )
 
 if not lib then
@@ -2884,8 +2884,10 @@ function Open(parent, func, level, value, point, relativePoint, cursorX, cursorY
 		end
 	end
 	CheckDualMonitor(frame)
-	frame:SetClampedToScreen(true)
-	frame:SetClampedToScreen(false)
+	frame:SetClampedToScreen( true )
+	if level ~=1 then
+		frame:SetClampedToScreen( false )
+	end
 	StartCounting(level)
 end
 
