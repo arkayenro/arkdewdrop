@@ -5,8 +5,8 @@ Description: A library to provide a dropdown menu interface.
 
 License: LGPL v2.1 (this file specifically)
 
-$Revision: 2648 $
-$Date: 2020-09-03 08:45:42 +1000 (Thu, 03 Sep 2020) $
+$Revision: 2757 $
+$Date: 2020-10-29 23:06:20 +1100 (Thu, 29 Oct 2020) $
 ]]
 
 --[[
@@ -21,7 +21,7 @@ License: LGPL v2.1
 ]]
 
 local libname = "ArkDewdrop"
-local libversion = 30109
+local libversion = 30110
 local lib = LibStub:NewLibrary( libname, libversion )
 
 if not lib then
@@ -588,7 +588,7 @@ local function AcquireButton( level )
 	local button
 	if #buttons == 0 then
 		numButtons = numButtons + 1
-		button = CreateFrame("Button", string.format( "%s%sButton%s", libname, libversion, numButtons ), nil)
+		button = CreateFrame("Button")
 		button:SetFrameStrata("FULLSCREEN_DIALOG")
 		button:SetHeight(16)
 		local highlight = button:CreateTexture(nil, "BACKGROUND")
@@ -844,7 +844,7 @@ local function AcquireLevel(level)
 		for i = #levels + 1, level, -1 do
 			local i = i
 			numLevels = numLevels + 1
-			local frame = CreateFrame("Button", string.format( "%s%sLevel%s", libname, libversion, numButtons, numLevels ), nil)
+			local frame = CreateFrame("Button")
 			if i == 1 then
 				local old_CloseSpecialWindows = CloseSpecialWindows
 				function CloseSpecialWindows()
@@ -3468,7 +3468,7 @@ local function activate()
 	
 	lib.frame:Show()
 	lib.hookedTooltip = true
-
+	
 	local OnTooltipHide = GameTooltip:GetScript("OnHide")
 	GameTooltip:SetScript( "OnHide",
 		function( self, ... )
@@ -3483,7 +3483,7 @@ local function activate()
 	
 	levels = {}
 	buttons = {}
-
+	
 end
 
 activate( )
